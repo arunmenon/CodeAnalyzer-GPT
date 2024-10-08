@@ -239,5 +239,5 @@ def main(subfolder=""):
     writeup_process.join()
 
 if __name__ == "__main__":
-    subfolder_to_scan =  "/vllm/attention/backends"
+    subfolder_to_scan =  "/vllm/entrypoints/openai"
     main(subfolder=subfolder_to_scan)
