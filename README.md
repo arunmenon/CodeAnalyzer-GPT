@@ -43,7 +43,7 @@
 ```
 
 ### Overview
-This project is an LLM-assisted code analyzer that leverages GPT-4 to recursively scan a specified GitHub repository, analyze its contents, and generate detailed writeups. The application retrieves the files from the repository, processes them in parallel using GPT-4, and saves the analyses. After all analyses are completed, it compiles the results into a final writeup.
+An LLM-assisted code analyzer.It scans the configured github repo folders and generates analysis reports.   
 
 ### Project Structure
 
