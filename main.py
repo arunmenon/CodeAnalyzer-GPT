@@ -1,23 +1,25 @@
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from multiprocessing import Process
-from config_loader import load_user_prompt_prefix
 from github_helper import get_files_in_repo
 from analysis_manager import process_file
 from writeup_manager import monitor_and_generate_writeup
 from tqdm import tqdm  # Progress bar
+from config_loader import load_repo_details
 
-REPO_OWNER = 'vllm-project'
-REPO_NAME = 'vllm'
 
 # Base GitHub API URL for repository content
-GITHUB_API_URL = f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/contents"
 
 def main(subfolder=""):
     """
     Main function that scans a specific subfolder or the entire repo if no subfolder is provided.
     """
+    # Load repository details from the config file
+    repo_owner, repo_name, subfolder = load_repo_details()
+
+    GITHUB_API_URL = f"https://api.github.com/repos/{repo_owner}/{repo_name}/contents"
+
+
     print(f"Fetching files from the repository's subfolder: {subfolder}...")
-    USER_PROMPT_PREFIX = load_user_prompt_prefix()
 
     # Fetch files
     files = get_files_in_repo(GITHUB_API_URL, subfolder)
@@ -32,7 +34,7 @@ def main(subfolder=""):
     # Using tqdm progress bar
     with tqdm(total=len(files), desc="Analyzing files", ncols=100, unit="file") as pbar:
         with ThreadPoolExecutor(max_workers=5) as executor:
-            futures = [executor.submit(process_file, file_data, USER_PROMPT_PREFIX) for file_data in files]
+            futures = [executor.submit(process_file, file_data) for file_data in files]
             for future in as_completed(futures):
                 result = future.result()
                 if result:
@@ -50,4 +52,4 @@ def main(subfolder=""):
     print("Writeup process completed successfully.")
 
 if __name__ == "__main__":
-    main(subfolder="/vllm/attention")
+    main()

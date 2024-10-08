@@ -17,13 +17,13 @@ def save_analysis(file_data, analysis, repo_owner, repo_name):
     with open(analysis_file_path, 'w', encoding='utf-8') as analysis_file:
         analysis_file.write(analysis)
 
-def process_file(file_data, user_prompt_prefix):
+def process_file(file_data):
     """
     Process individual file content, analyze it with GPT-4, and save the analysis.
     """
     file_url = file_data['download_url']
     file_content = requests.get(file_url).text
-    analysis = send_file_to_gpt4(file_content, user_prompt_prefix)
+    analysis = send_file_to_gpt4(file_content)
     if analysis:
         save_analysis(file_data, analysis, "vllm-project", "vllm")
         return file_data['path'] + ".analysis.txt"

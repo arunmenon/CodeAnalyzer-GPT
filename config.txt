@@ -1,1 +1,5 @@
+SYSTEM_PROMPT=You are a helpful assistant.
 USER_PROMPT_PREFIX=Please analyze the following code and give intutive explaination.Make it easy to understand:
+REPO_OWNER=vllm-project
+REPO_NAME=vllm
+SUBFOLDER_TO_SCAN=/vllm/attention
