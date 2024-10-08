@@ -81,7 +81,7 @@ An LLM-assisted code analyzer.It scans the configured github repo folders and ge
 
 ### Configuration
 
-The analyzer is easily configured via the `config.txt` file:
+The analyzer is pulls the repo scan and prompt config from  the `config.txt` file:
 
 ```plaintext
 SYSTEM_PROMPT=You are a helpful assistant.
